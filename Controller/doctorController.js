@@ -1,3 +1,6 @@
+const { Doctor } = require("../Model/doctorModel");
+const catchAsync = require("../utils/catchAsync");
+
 exports.getAllDoctors = (request, response) => {
   response.status(200).json({
     status: 'Success',
@@ -15,12 +18,29 @@ exports.getDoctorById = (request, response) => {
 
 //CREATE A NEW DOCTOR
 //SHOULD ONLY BE PERMITTED TO ADMIN I GUESS
-exports.createDoctor = (request, response) => {
-  response.status(201).json({
-    status: 'Success',
-    data: 'create Doctor',
-  });
-};
+exports.createDoctor = catchAsync( async (request, response) => {
+  try {
+    const doctor = await Doctor.create({
+      name:request.body.name,
+      email:request.body.email,
+      password:request.body.password,
+      passwordConfirm:request.body.passwordConfirm,
+      role:request.body.role,
+    })
+    
+    
+    response.status(201).json({
+      status: 'Success',
+      data: doctor,
+    });
+  } catch (error) {
+    response.status(400).json({
+      status: 'Failed',
+      error ,
+    });
+  }
+ 
+});
 
 //SHOULD ONLY BE PERMITTED TO ADMIN & DOCTOR HIMSELF I GUESS
 
