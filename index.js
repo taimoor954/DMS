@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
 const {doctorRouter} = require('./Routes/doctorRoutes.js')
+const {patientRouter} = require('./Routes/patientRoutes.js')
 
 const app = express();
 //CONFIG SERCRETS FROM config.env FILE
@@ -29,6 +30,7 @@ const getMongoConnection = async () => {
 getMongoConnection();
 
 app.use('/api/v1/doctor', doctorRouter)
+app.use('/api/v1/patient', patientRouter)
 
 
 //SERVER LISTENING  
