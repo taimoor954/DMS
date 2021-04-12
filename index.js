@@ -1,12 +1,35 @@
-
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
-const {doctorRouter} = require('./Routes/doctorRoutes.js')
-const {patientRouter} = require('./Routes/patientRoutes.js')
+const { doctorRouter } = require('./Routes/doctorRoutes.js');
+const { patientRouter } = require('./Routes/patientRoutes.js');
+const { appointmentRouter } = require('./Routes/appointmentRoutes');
 
 const app = express();
+
+//Set every application request and response header's content type to json format 
+app.use(function (request, response, next) {
+  request.headers['Content-Type'] = 'application/json';
+  response.setHeader('Content-Type', 'application/json');
+  next();
+});
+
+//BODY PARSER
+app.use(
+  express.json({
+    limit: '10kb', //size of req.body can be upto 10kb
+  })
+); 
+
+//EXPRESS REQUEST RESPONSE CONFIGURATION
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: '10kb',
+  })
+);
+
 //CONFIG SERCRETS FROM config.env FILE
 dotenv.config({
   path: `${__dirname}/config.env`,
@@ -29,11 +52,13 @@ const getMongoConnection = async () => {
 };
 getMongoConnection();
 
-app.use('/api/v1/doctor', doctorRouter)
-app.use('/api/v1/patient', patientRouter)
 
+//ROUTES HANDLER MIDDLEWARE
+app.use('/api/v1/doctor', doctorRouter);
+app.use('/api/v1/patient', patientRouter);
+app.use('/api/v1/appointment', appointmentRouter);
 
-//SERVER LISTENING  
+//SERVER LISTENING
 const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Listening at port.... ${port}`);
