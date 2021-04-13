@@ -8,7 +8,7 @@ const { appointmentRouter } = require('./Routes/appointmentRoutes');
 
 const app = express();
 
-//Set every application request and response header's content type to json format 
+//Set every application request and response header's content type to json format
 app.use(function (request, response, next) {
   request.headers['Content-Type'] = 'application/json';
   response.setHeader('Content-Type', 'application/json');
@@ -20,7 +20,7 @@ app.use(
   express.json({
     limit: '10kb', //size of req.body can be upto 10kb
   })
-); 
+);
 
 //EXPRESS REQUEST RESPONSE CONFIGURATION
 app.use(
@@ -35,8 +35,16 @@ dotenv.config({
   path: `${__dirname}/config.env`,
 });
 
+//CONNECTION STRING FOR CLOUD DB
+const DB = process.env.DATABASE_ATLAS.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_ATLAS_PASSWORD
+);
+console.log(DB);
+
+//CONNECTION STRING FOR LOCAL DB
+const DBLocal = process.env.DATABASE_LOCAL;
 //MONGO DB CONNECTION
-const DB = process.env.DATABASE_LOCAL;
 const getMongoConnection = async () => {
   try {
     await mongoose.connect(DB, {
@@ -47,11 +55,12 @@ const getMongoConnection = async () => {
     });
     console.log(`Database has been connected!.....`);
   } catch (error) {
-    console.log(error);
+    console.log(`Error:${error}`);
+    console.log('APPLICATION CRASHEDD 🔥🔥');
+    process.exit(1);
   }
 };
 getMongoConnection();
-
 
 //ROUTES HANDLER MIDDLEWARE
 app.use('/api/v1/doctor', doctorRouter);
@@ -59,7 +68,7 @@ app.use('/api/v1/patient', patientRouter);
 app.use('/api/v1/appointment', appointmentRouter);
 
 //SERVER LISTENING
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Listening at port.... ${port}`);
+  console.log(`Listening at port ${port}`);
 });
