@@ -4,9 +4,15 @@ const catchAsync = require('../utils/catchAsync');
 
 exports.deleteFactory = (Model) =>
   catchAsync(async (request, response, next) => {
-    const doc = await Model.findByIdAndDelete(request.params.id);
+    const doc = await Model.findByIdAndDelete(request.params.doctorId);
     if (!doc) {
-      return next(new AppError('No doc with this ID found', 404));
+      //ERROR CLASSS AIEGA YAHA
+      // return next(new AppError('No doc with this ID found', 404));
+      return response.status(400).json({
+        status: 'Failed ',
+        message: 'Failed deleted',
+      });
+    
     }
     return response.status(200).json({
       status: 'Success ',
@@ -16,12 +22,17 @@ exports.deleteFactory = (Model) =>
 
 exports.updateFactory = (Model) =>
   catchAsync(async (request, response, next) => {
-    const doc = await Model.findByIdAndUpdate(request.params.id, request.body, {
+    const doc = await Model.findByIdAndUpdate(request.params.doctorId, request.body, {
       new: true,
       runValidators: true,
     });
     if (!doc) {
-      return next(new AppError('No doc with this ID found', 404));
+      //Error aiega yaha
+      return response.status(200).json({
+        status: 'Failed ',
+        message: 'Could not update updated ',
+        
+      });
     }
     return response.status(200).json({
       status: 'Success ',
@@ -38,7 +49,7 @@ exports.createFactory = (Model) =>
     return response.status(201).json({
       status: 'sucess',
       data: {
-        tour: doc,
+        doctor: doc,
       },
     });
   });
@@ -65,10 +76,7 @@ exports.getOneFactoryById = (Model, populateOptions) =>
 
 exports.getAllFactory = (Model) =>
   catchAsync(async (request, response, next) => {
-    console.log(request.params.ratingAverage);
-
     var filterObject = {};
-
     if (request.params.tourId) {
       filterObject = {
         tour: request.params.tourId,

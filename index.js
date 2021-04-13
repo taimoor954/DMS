@@ -40,7 +40,6 @@ const DB = process.env.DATABASE_ATLAS.replace(
   '<PASSWORD>',
   process.env.DATABASE_ATLAS_PASSWORD
 );
-console.log(DB);
 
 //CONNECTION STRING FOR LOCAL DB
 const DBLocal = process.env.DATABASE_LOCAL;
