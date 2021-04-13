@@ -1,18 +1,13 @@
 const { APIFeatures } = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
-// const { AppError } = require('../utils/Error');
+const { AppError } = require('../utils/Error');
 
 exports.deleteFactory = (Model) =>
   catchAsync(async (request, response, next) => {
     const doc = await Model.findByIdAndDelete(request.params.doctorId);
     if (!doc) {
       //ERROR CLASSS AIEGA YAHA
-      // return next(new AppError('No doc with this ID found', 404));
-      return response.status(400).json({
-        status: 'Failed ',
-        message: 'Failed deleted',
-      });
-    
+      return next(new AppError('No doc with this ID found', 404));
     }
     return response.status(200).json({
       status: 'Success ',
@@ -22,17 +17,17 @@ exports.deleteFactory = (Model) =>
 
 exports.updateFactory = (Model) =>
   catchAsync(async (request, response, next) => {
-    const doc = await Model.findByIdAndUpdate(request.params.doctorId, request.body, {
-      new: true,
-      runValidators: true,
-    });
+    const doc = await Model.findByIdAndUpdate(
+      request.params.doctorId,
+      request.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
     if (!doc) {
       //Error aiega yaha
-      return response.status(200).json({
-        status: 'Failed ',
-        message: 'Could not update updated ',
-        
-      });
+      return next(new AppError('No doc with this ID found', 404));
     }
     return response.status(200).json({
       status: 'Success ',
@@ -61,10 +56,7 @@ exports.getOneFactoryById = (Model, populateOptions) =>
 
     const doc = await query;
     if (!doc) {
-      //Error class aiegi yahan
-      return response.status(400).json({
-        status: 'failed',
-      });
+      return next(new AppError('No doc with this ID found', 404));
     }
     return response.status(200).json({
       status: 'success',
