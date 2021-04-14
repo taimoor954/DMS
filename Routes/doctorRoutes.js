@@ -1,4 +1,5 @@
 const express = require('express');
+const { login } = require('../Controller/doctorAuthentication');
 const {
   getAllDoctors,
   createDoctor,
@@ -9,6 +10,7 @@ const {
 const router = express.Router();
 
 router.route('/').get(getAllDoctors).post(createDoctor);
+router.route('/login-doctor').post(login);
 
 router
   .route('/:doctorId')

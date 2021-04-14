@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-//TO CATCH UNCAUGH EXCEPTION AND SHOW THEM IN CONSOLE
+// TO CATCH UNCAUGH EXCEPTION AND SHOW THEM IN CONSOLE
 process.on('uncaughtException', (e) => {
   console.log(`Error: ${e.name}!! ${e.message}`);
 });

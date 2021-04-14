@@ -45,6 +45,7 @@ const doctorSchema = new mongoose.Schema({
   },
 });
 
+
 //hash pass before saving doc
 doctorSchema.pre('save', async function (next) {
   //if the pass is modified only then encrypt dontt encrypt again and again
@@ -56,6 +57,12 @@ doctorSchema.pre('save', async function (next) {
   //delete pass comfirm field
   this.passwordConfirm = undefined;
 });
+doctorSchema.methods.matchPassword = async function (
+  requestBodyPassword,
+  storedPassword
+) {
+  return await bcrypt.compare(storedPassword, requestBodyPassword); //rettuns bool
+};
 
 const Doctor = mongoose.model('Doctor', doctorSchema);
 exports.Doctor = Doctor;
