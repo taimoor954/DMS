@@ -33,37 +33,6 @@ app.use(
   })
 );
 
-//CONFIG SERCRETS FROM config.env FILE
-dotenv.config({
-  path: `${__dirname}/config.env`,
-});
-
-//CONNECTION STRING FOR CLOUD DB
-const DB = process.env.DATABASE_ATLAS.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_ATLAS_PASSWORD
-);
-
-//CONNECTION STRING FOR LOCAL DB
-const DBLocal = process.env.DATABASE_LOCAL;
-//MONGO DB CONNECTION
-const getMongoConnection = async () => {
-  try {
-    await mongoose.connect(DB, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: true,
-      useUnifiedTopology: true,
-    });
-    console.log(`Database has been connected!.....`);
-  } catch (error) {
-    console.log(`Error:${error}`);
-    console.log('APPLICATION CRASHEDD 🔥🔥');
-    process.exit(1);
-  }
-};
-getMongoConnection();
-
 //ROUTES HANDLER MIDDLEWARE
 app.use('/api/v1/doctor', doctorRouter);
 app.use('/api/v1/patient', patientRouter);
@@ -77,8 +46,4 @@ app.all('*', (request, response, next) => {
 //GLOBAL ERROR CONTROLLER
 app.use(globalErrorHandeler);
 
-//SERVER LISTENING
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Listening at port ${port}`);
-});
+exports.app = app;
