@@ -1,6 +1,8 @@
 const dotenv = require('dotenv').config();
-const { AppError } = require('../utils/Error');
+const { AppError } = require('../utils/Error.js');
 const mongoose = require('mongoose');
+
+
 var routeNotFound = (err) => {
   var message = err.message;
   return new AppError(message, 404);
@@ -21,6 +23,7 @@ var handleJWTExpityError = (err) => {
 };
 
 var sendErrorDev = (err, request, response) => {
+  console.log('Error somewhere in errorController');
   if (request.originalUrl.startsWith('/api')) {
     return response.status(err.statusCode).json({
       status: err.status,
@@ -36,6 +39,7 @@ var sendErrorDev = (err, request, response) => {
     });
   }
 };
+
 var sendErrorProd = (err, request, response) => {
   if (request.originalUrl.startsWith('/api')) {
     if (err.isOperationalError) {
@@ -70,6 +74,7 @@ var sendErrorProd = (err, request, response) => {
 };
 
 module.exports = (err, request, response, next) => {
+  console.log('inside error handler');
   if (err.message.includes(`route ${request.originalUrl} not found`)) {
     return response.status(err.statusCode).json({
       statusCode: err.statusCode,

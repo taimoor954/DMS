@@ -6,6 +6,9 @@ const { doctorRouter } = require('./Routes/doctorRoutes.js');
 const { patientRouter } = require('./Routes/patientRoutes.js');
 const { appointmentRouter } = require('./Routes/appointmentRoutes');
 
+const globalErrorHandeler = require('./Controller/errorController.js');
+const { AppError } = require('./utils/Error.js');
+
 const app = express();
 
 //Set every application request and response header's content type to json format
@@ -65,6 +68,14 @@ getMongoConnection();
 app.use('/api/v1/doctor', doctorRouter);
 app.use('/api/v1/patient', patientRouter);
 app.use('/api/v1/appointment', appointmentRouter);
+
+//ERROR HANDLER FOR ROUTE NOT FOUND
+app.all('*', (request, response, next) => {
+  next(new AppError(`route ${request.originalUrl} not found`, 404));
+});
+
+//GLOBAL ERROR CONTROLLER
+app.use(globalErrorHandeler);
 
 //SERVER LISTENING
 const port = process.env.PORT || 3000;

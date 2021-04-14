@@ -27,6 +27,7 @@ exports.updateFactory = (Model) =>
     );
     if (!doc) {
       //Error aiega yaha
+
       return next(new AppError('No doc with this ID found', 404));
     }
     return response.status(200).json({
@@ -56,6 +57,7 @@ exports.getOneFactoryById = (Model, populateOptions) =>
 
     const doc = await query;
     if (!doc) {
+      console.log('working ');
       return next(new AppError('No doc with this ID found', 404));
     }
     return response.status(200).json({
