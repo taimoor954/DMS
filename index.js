@@ -47,3 +47,7 @@ app.all('*', (request, response, next) => {
 app.use(globalErrorHandeler);
 
 exports.app = app;
+
+
+// dms.com/api/v1/doctor //Get all Doctors
+

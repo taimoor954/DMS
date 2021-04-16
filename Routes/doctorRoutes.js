@@ -9,6 +9,7 @@ const {
 } = require('../Controller/doctorController');
 const router = express.Router();
 
+
 router.route('/').get(protectedRouteMiddleware,getAllDoctors).post(createDoctor);
 router.route('/login-doctor').post(login);
 // router.route('/protect').get(protectedRouteMiddleware);
