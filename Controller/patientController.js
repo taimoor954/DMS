@@ -1,41 +1,26 @@
-exports.getAllPatients = (request, response) => {
-  response.status(200).json({
-    status: 'Success',
-    data: 'Get all Patients',
-  });
-};
+const { Patient } = require('../Model/PatientModel');
+const catchAsync = require('../utils/catchAsync');
+const {
+  getAllFactory,
+  createFactory,
+  getOneFactoryById,
+  updateFactory,
+  deleteFactory,
+} = require('./handlerFactory');
+
+exports.getAllPatients = getAllFactory(Patient);
 
 //TO GET SPECFIC DR BY PROVIDING HIS/HER ID
-exports.getPatientById = (request, response) => {
-  response.status(200).json({
-    status: 'Success',
-    data: 'get Patient by id',
-  });
-};
+exports.getPatientById = getOneFactoryById(Patient);
 
 //CREATE A NEW Patient
 //SHOULD ONLY BE PERMITTED TO ADMIN I GUESS
-exports.createPatient = (request, response) => {
-  response.status(201).json({
-    status: 'Success',
-    data: 'create Patient',
-  });
-};
+//WORK AS SIGNUP
+exports.createPatient = createFactory(Patient);
+//SHOULD ONLY BE PERMITTED TO ADMIN & Patient HIMSELF I GUESS
+
+exports.updatePatient = updateFactory(Patient);
 
 //SHOULD ONLY BE PERMITTED TO ADMIN & Patient HIMSELF I GUESS
 
-exports.updatePatient = (request, response) => {
-  response.status(200).json({
-    status: 'Success',
-    data: 'update Patient',
-  });
-};
-
-//SHOULD ONLY BE PERMITTED TO ADMIN & Patient HIMSELF I GUESS
-
-exports.deletePatient = (request, response) => {
-  response.status(200).json({
-    status: 'Success',
-    data: 'delete Patient',
-  });
-};
+exports.deletePatient = deleteFactory(Patient);
