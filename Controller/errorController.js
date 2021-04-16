@@ -23,7 +23,6 @@ var handleJWTExpityError = (err) => {
 };
 
 var sendErrorDev = (err, request, response) => {
-  console.log('Error somewhere in errorController');
   if (request.originalUrl.startsWith('/api')) {
     return response.status(err.statusCode).json({
       status: err.status,
@@ -74,7 +73,6 @@ var sendErrorProd = (err, request, response) => {
 };
 
 module.exports = (err, request, response, next) => {
-  console.log('inside error handler');
   if (err.message.includes(`route ${request.originalUrl} not found`)) {
     return response.status(err.statusCode).json({
       statusCode: err.statusCode,
