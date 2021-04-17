@@ -14,5 +14,5 @@ dotenv.config({ path: configDIR });
 
 exports.login = login(Doctor)
 
-exports.protectedRouteMiddleware = protectedRouteMiddleware(Doctor)
+exports.protectedRouteMiddlewareForDoctor = protectedRouteMiddleware(Doctor)
 

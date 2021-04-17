@@ -1,4 +1,5 @@
 const { Doctor } = require('../Model/doctorModel');
+const { Appointment } = require('../Model/appointmentModel');
 const catchAsync = require('../utils/catchAsync');
 const {
   getAllFactory,
@@ -24,3 +25,11 @@ exports.updateDoctor = updateFactory(Doctor);
 //SHOULD ONLY BE PERMITTED TO ADMIN & DOCTOR HIMSELF I GUESS
 
 exports.deleteDoctor = deleteFactory(Doctor);
+
+
+exports.getMyPatients = catchAsync(async(request, response, next) => {
+const appointments = await Appointment.find({doctor : request.user.id})
+response.status(200).json({
+  patients : appointments
+})
+})
