@@ -6,9 +6,10 @@ const {
   updateAppointment,
   deleteAppointment,
 } = require('../Controller/appointmentController');
+const { protectedRouteMiddleware } = require('../Controller/patientAuthentication');
 const router = express.Router();
 
-router.route('/').get(getAllAppointments).post(createAppointment);
+router.route('/').get(getAllAppointments).post(protectedRouteMiddleware,createAppointment);
 
 router
   .route('/:doctorId')
