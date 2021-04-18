@@ -30,7 +30,9 @@ exports.deletePatient = deleteFactory(Patient);
 
 exports.getMyDoctors = catchAsync(async(request, response, next) => {
   const appointments = await Appointment.find({patient : request.user.id})
+  console.log(request.user);
   response.status(200).json({
-    patients : appointments
+    total: appointments.length,
+    appointments
   })
   })

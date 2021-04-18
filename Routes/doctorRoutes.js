@@ -1,5 +1,5 @@
 const express = require('express');
-const { login,  protectedRouteMiddlewareForDoctor } = require('../Controller/doctorAuthentication');
+const { login, protectDoctorRoutes} = require('../Controller/doctorAuthentication');
 const {
   getAllDoctors,
   createDoctor,
@@ -11,15 +11,15 @@ const {
 const router = express.Router();
 
 
-router.route('/').get(protectedRouteMiddlewareForDoctor,getAllDoctors).post(createDoctor);
-router.route('/get-my-pateints').get(protectedRouteMiddlewareForDoctor, getMyPatients)
+router.route('/').get(getAllDoctors).post(createDoctor);
+router.route('/get-my-pateints').get( protectDoctorRoutes,getMyPatients)
 router.route('/login-doctor').post(login);
 // router.route('/protect').get(protectedRouteMiddleware);
 
 router
   .route('/:doctorId')
-  .get(protectedRouteMiddlewareForDoctor,getDoctorById)
-  .patch(protectedRouteMiddlewareForDoctor,updateDoctor)
-  .delete(protectedRouteMiddlewareForDoctor,deleteDoctor);
+  .get(getDoctorById)
+  .patch(updateDoctor)
+  .delete(deleteDoctor);
 
 exports.doctorRouter = router;

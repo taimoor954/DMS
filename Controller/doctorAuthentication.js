@@ -6,13 +6,35 @@ const { Doctor } = require('../Model/doctorModel');
 const jwt = require('jsonwebtoken');
 const catchAsync = require('../utils/catchAsync');
 const path = require('path');
-const { protectedRouteMiddleware, login } = require('../middleware/middleware');
+const {  login, protectRouteMiddleware } = require('../middleware/middleware');
 const configDIR = path.join(__dirname, '../config.env');
 
 dotenv.config({ path: configDIR });
 
+exports.login = login(Doctor);
 
-exports.login = login(Doctor)
+exports.protectDoctorRoutes = catchAsync(async (request, response, next) => {
+  let token;
+  console.log('working 1st');
+  if (
+    request.headers.authorization &&
+    request.headers.authorization.startsWith('Bearer')
+  ) {
+    token = request.headers.authorization.split(' ')[1];
+  }
+  console.log('working');
+  if (!token) {
+    return next(new AppError('You are not logged in .Please log in', 401));
+  }
 
-exports.protectedRouteMiddlewareForDoctor = protectedRouteMiddleware(Doctor)
+  const decodedToken = await jwt.verify(token, process.env.SECRET_TOKEN_STRING);
+  const freshUser = await Doctor.findById(decodedToken.id);
+  if (!freshUser)
+    return next(
+      new AppError('The user belonging to this token is no longer exist', 401)
+    );
 
+  request.user = freshUser;
+    console.log(request.user);
+  next();
+});

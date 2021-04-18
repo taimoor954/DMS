@@ -7,15 +7,14 @@ const {
   deleteAppointment,
 } = require('../Controller/appointmentController');
 const {
-  protectedRouteMiddleware,
-  protectedRouteMiddlewareForPatients,
+  protectPatientsRoute
 } = require('../Controller/patientAuthentication');
 const router = express.Router();
 
 router
   .route('/')
   .get(getAllAppointments)
-  .post(protectedRouteMiddlewareForPatients, createAppointment);
+  .post(createAppointment);
 
 router
   .route('/:doctorId')

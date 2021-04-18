@@ -1,5 +1,5 @@
 const express = require('express');
-const { login,  protectedRouteMiddlewareForPatients } = require('../Controller/patientAuthentication');
+const { login,  protectPatientRoutes  } = require('../Controller/patientAuthentication');
 const router = express.Router()
 const {
   getAllPatients,
@@ -12,7 +12,7 @@ const {
 
 router.route('/').get(getAllPatients).post(createPatient);
 router.route('/login-patient').post(login);
-router.route('/get-my-doctors').get(protectedRouteMiddlewareForPatients,getMyDoctors)
+router.route('/getmydoctors').get(protectPatientRoutes,getMyDoctors)
 
 router
   .route('/:doctorId')
