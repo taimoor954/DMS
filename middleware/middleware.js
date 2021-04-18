@@ -9,6 +9,32 @@ const { Patient } = require('../Model/PatientModel');
 const configDIR = path.join(__dirname, '../config.env');
 dotenv.config({ path: configDIR });
 
+const createSendToken = (user, statusCode, request, response) => {
+  //for login and sending token
+  const token = tokenGenerator(user._id);
+
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.COOKIE_EXPIRY_IN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+    path: '/',
+    secure: request.secure || request.headers['x-forwarded-proto'] == 'https',
+  };
+
+  response.cookie('jwt', token, cookieOptions);
+  console.log('Cookie has been set in browser');
+  // if (process.env.NODE_ENV == 'production') cookieOptions.secure = true; //FOR DEV
+  // if (request.secure || request.headers['x-forwarded-proto'] == 'https') cookieOptions.secure = true; //for prod HEROKU SPECFIC
+  user.password = undefined;
+  response.status(statusCode).json({
+    status: 'success',
+    token,
+    data: {
+      user,
+    },
+  });
+};
 
 const tokenGenerator = (id) => {
   return jwt.sign(
@@ -21,35 +47,32 @@ const tokenGenerator = (id) => {
     }
   );
 };
-exports.login = (Model) =>  catchAsync(async (request, response, next) => {
-  //Email and password will be fetched from request.body
-  var { email, password } = request.body;
+exports.login = (Model) =>
+  catchAsync(async (request, response, next) => {
+    //Email and password will be fetched from request.body
+    var { email, password } = request.body;
 
-  //Check if emall is in correct format
-  if (!validator.isEmail(email)) {
-    return next(
-      new AppError('Something wrong with either email or password', 400)
-    );
-  }
+    //Check if emall is in correct format
+    if (!validator.isEmail(email)) {
+      return next(
+        new AppError('Something wrong with either email or password', 400)
+      );
+    }
 
-  //Check if any user exist with this email
-  const doctor = await Model.findOne({ email }).select('+password');
-  if (!doctor)
-    next(new AppError('Something wrong with either email or password', 400));
-  //check password and compare it with hashed password
-  if (!doctor || !(await doctor.matchPassword(doctor.password, password))) {
-    return next(
-      new AppError('Something wrong with either email or password', 400)
-    );
-  }
-  // console.log(request.headers);
-  //if correct then send jwt in response
-  return response.status(200).json({
-    success: 'Succesfully logged in!!',
-    doctor,
-    token: tokenGenerator(doctor._id),
+    //Check if any user exist with this email
+    const doctor = await Model.findOne({ email }).select('+password');
+    if (!doctor)
+      next(new AppError('Something wrong with either email or password', 400));
+    //check password and compare it with hashed password
+    if (!doctor || !(await doctor.matchPassword(doctor.password, password))) {
+      return next(
+        new AppError('Something wrong with either email or password', 400)
+      );
+    }
+    // console.log(request.headers);
+    //if correct then send jwt in response
+    createSendToken(doctor, 200, request, response);
   });
-});
 
 exports.restrictUser = (...roles) => {
   return (request, response, next) => {
@@ -61,4 +84,3 @@ exports.restrictUser = (...roles) => {
     next();
   };
 };
-

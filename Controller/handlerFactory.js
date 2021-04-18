@@ -92,3 +92,6 @@ exports.getAllFactory = (Model) =>
       },
     });
   });
+
+
+

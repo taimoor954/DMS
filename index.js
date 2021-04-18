@@ -1,6 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const cors = require('cors')
+const cookie_parser = require('cookie-parser');
+
 
 const { doctorRouter } = require('./Routes/doctorRoutes.js');
 const { patientRouter } = require('./Routes/patientRoutes.js');
@@ -11,12 +14,37 @@ const { AppError } = require('./utils/Error.js');
 
 const app = express();
 
+app.use(cookie_parser());
+app.use(cors())
+
 //Set every application request and response header's content type to json format
 app.use(function (request, response, next) {
   request.headers['Content-Type'] = 'application/json';
   response.setHeader('Content-Type', 'application/json');
   next();
 });
+
+app.use(function (req, res, next) {
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+  // Request methods you wish to allow
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin,X-Requested-With,content-type,set-cookie'
+  );
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  // Pass to next layer of middleware
+  next();
+});
+
 
 //BODY PARSER
 app.use(

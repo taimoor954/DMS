@@ -15,14 +15,15 @@ exports.login = login(Doctor);
 
 exports.protectDoctorRoutes = catchAsync(async (request, response, next) => {
   let token;
-  console.log('working 1st');
   if (
     request.headers.authorization &&
     request.headers.authorization.startsWith('Bearer')
   ) {
     token = request.headers.authorization.split(' ')[1];
+  }else if (request.cookies.jwt) {
+    token = request.cookies.jwt;
   }
-  console.log('working');
+  
   if (!token) {
     return next(new AppError('You are not logged in .Please log in', 401));
   }
