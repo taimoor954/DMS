@@ -22,10 +22,9 @@ const createSendToken = (user, statusCode, request, response) => {
     secure: request.secure || request.headers['x-forwarded-proto'] == 'https',
   };
 
-  response.cookie('jwt', token, cookieOptions);
-  console.log('Cookie has been set in browser');
   // if (process.env.NODE_ENV == 'production') cookieOptions.secure = true; //FOR DEV
-  // if (request.secure || request.headers['x-forwarded-proto'] == 'https') cookieOptions.secure = true; //for prod HEROKU SPECFIC
+  if (request.secure || request.headers['x-forwarded-proto'] == 'https') cookieOptions.secure = true; //for prod HEROKU SPECFIC
+  response.cookie('jwt', token, cookieOptions);
   user.password = undefined;
   response.status(statusCode).json({
     status: 'success',

@@ -7,19 +7,19 @@ const {
   deleteAppointment,
 } = require('../Controller/appointmentController');
 const {
-  protectPatientsRoute
+  protectPatientsRoute, protectPatientRoutes
 } = require('../Controller/patientAuthentication');
 const router = express.Router();
 
 router
   .route('/')
-  .get(getAllAppointments)
-  .post(createAppointment);
+  .get(getAllAppointments) //api will be use by admin
+  .post(protectPatientRoutes,createAppointment); //api will be use by patient
 
 router
   .route('/:doctorId')
-  .get(getAppointmentById)
-  .patch(updateAppointment)
-  .delete(deleteAppointment);
+  .get(getAppointmentById) //api will be use by admin
+  .patch(updateAppointment) //api will be use by admin
+  .delete(deleteAppointment); //api will be use by admin
 
 exports.appointmentRouter = router;

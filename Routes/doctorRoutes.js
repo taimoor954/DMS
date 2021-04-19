@@ -11,15 +11,19 @@ const {
 const router = express.Router();
 
 
-router.route('/').get(getAllDoctors).post(createDoctor);
-router.route('/get-my-pateints').get( protectDoctorRoutes,getMyPatients)
-router.route('/login-doctor').post(login);
-// router.route('/protect').get(protectedRouteMiddleware);
+router.route('/')
+.get(getAllDoctors)// api will be use by both client and doctor side
+.post(createDoctor); //Api will be use doctor side 
+
+
+
+router.route('/get-my-pateints').get( protectDoctorRoutes,getMyPatients) //api will be use by just patient side
+router.route('/login-doctor').post(login);//use by just patient
 
 router
   .route('/:doctorId')
-  .get(getDoctorById)
-  .patch(updateDoctor)
-  .delete(deleteDoctor);
+  .get(getDoctorById) // api will be use by both client and doctor side
+  .patch(updateDoctor)// api will be use by doctor side
+  .delete(deleteDoctor); //// api will be use by admin side and doctor side
 
 exports.doctorRouter = router;

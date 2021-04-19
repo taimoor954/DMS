@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors')
 const cookie_parser = require('cookie-parser');
-
+const compression = require('compression')
 
 const { doctorRouter } = require('./Routes/doctorRoutes.js');
 const { patientRouter } = require('./Routes/patientRoutes.js');
@@ -13,10 +13,13 @@ const globalErrorHandeler = require('./Controller/errorController.js');
 const { AppError } = require('./utils/Error.js');
 
 const app = express();
+app.enable('trust proxy')
 
 app.use(cookie_parser());
 app.use(cors())
 
+
+app.use(compression()) //compress all the text sent to client
 //Set every application request and response header's content type to json format
 app.use(function (request, response, next) {
   request.headers['Content-Type'] = 'application/json';

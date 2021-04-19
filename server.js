@@ -53,9 +53,9 @@ process.on('unhandledRejection', (e) => {
   });
 });
 
-// process.on('SIGTERM', () => { //HEROKU SPECIFIC shut down server but complete all requsst before shutting down
-//   console.log('SIG TERM RECIVED.... SHUTTING DOWN GRACEFULLY 🥳😇')
-//   server.close(() => {
-//     console.log('Process Terminated ☠ ☠')
-//   })
-// })
+process.on('SIGTERM', () => { //HEROKU SPECIFIC shut down server but complete all requsst before shutting down
+  console.log('SIG TERM RECIVED.... SHUTTING DOWN GRACEFULLY 🥳😇')
+  server.close(() => {
+    console.log('Process Terminated ☠ ☠')
+  })
+})
