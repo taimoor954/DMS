@@ -22,9 +22,17 @@ const {
   updatePatient,
   deletePatient,
 } = require('../Controller/patientController');
+const { logout } = require('../middleware/middleware');
 const router = express.Router();
 
 router.route('/').get(getAllAdmins).post(createAdmin);
+router.route('/login-admin').post(login);
+
+
+
+router.use(protectAdminRoutes);//All below will be protected now. Admin must be logged in before using below functionlities
+
+router.route('/logout').get(logout)
 
 router
   .route('/get-admin-by-id/:Id')
@@ -32,10 +40,8 @@ router
   .patch(updateAdmin)
   .delete(deleteAdmin);
 
-router.route('/getAllDoctors').get(protectAdminRoutes, getAllDoctors);
-router.route('/getAllPatients').get(protectAdminRoutes, getAllPatients);
-
-router.route('/login-admin').post(login);
+router.route('/getAllDoctors').get(getAllDoctors);
+router.route('/getAllPatients').get(getAllPatients);
 
 router
   .route('/get-patient-by-id/:Id')

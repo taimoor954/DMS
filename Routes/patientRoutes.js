@@ -9,9 +9,9 @@ const {
   deletePatient,
   getMyDoctors,
 } = require('../Controller/patientController');
+const { logout } = require('../middleware/middleware');
 
-router.route('/')
-.get(getAllPatients) //api will be use by just admin side
+router.route('/').get(protectPatientRoutes,getAllPatients) //api will be use by just admin side
 .post(createPatient); //api will be use by patient side just
 
 router.route('/login-patient').post(login); //api will be use by patient side just
@@ -20,8 +20,11 @@ router.route('/getmydoctors')
 
 router
   .route('/:Id')
-  .get(getPatientById) //api will be use by admin side only
-  .patch(updatePatient) //api will be use by patient side just
-  .delete(deletePatient); //api will be use by admin 
+  .get(protectPatientRoutes,getPatientById) //api will be use by admin side only
+  .patch(protectPatientRoutes,updatePatient) //api will be use by patient side just
+  .delete(protectPatientRoutes,deletePatient); //api will be use by admin 
+
+router.route('/logout').get(logout)
+
 
 exports.patientRouter = router;
