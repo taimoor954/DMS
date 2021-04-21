@@ -27,7 +27,7 @@ const router = express.Router();
 router.route('/').get(getAllAdmins).post(createAdmin);
 
 router
-  .route('/:adminId')
+  .route('/get-admin-by-id/:Id')
   .get(getAdminById)
   .patch(updateAdmin)
   .delete(deleteAdmin);
@@ -38,13 +38,13 @@ router.route('/getAllPatients').get(protectAdminRoutes, getAllPatients);
 router.route('/login-admin').post(login);
 
 router
-  .route('/:Id')
+  .route('/get-patient-by-id/:Id')
   .get(getPatientById) //api will be use by admin side only
   .patch(updatePatient) //api will be use by patient side just
   .delete(deletePatient); //api will be use by admin
 
 router
-  .route('/:Id')
+  .route('/get-doctor-by-id/:Id')
   .get(getDoctorById) // api will be use by both client and doctor side
   .patch(updateDoctor) // api will be use by doctor side
   .delete(deleteDoctor); //// api will be use by admin side and doctor side

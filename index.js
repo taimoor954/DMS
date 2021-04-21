@@ -30,7 +30,7 @@ app.use(function (request, response, next) {
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4545');
   // Request methods you wish to allow
   res.setHeader(
     'Access-Control-Allow-Methods',
@@ -64,6 +64,8 @@ app.use(
     limit: '10kb',
   })
 );
+
+var date = new Date()
 
 //ROUTES HANDLER MIDDLEWARE
 app.use('/api/v1/doctor', doctorRouter);

@@ -1,3 +1,6 @@
+const { Admin } = require('../Model/adminModel');
+const { Doctor } = require('../Model/doctorModel');
+const { Patient } = require('../Model/PatientModel');
 const { APIFeatures } = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const { AppError } = require('../utils/Error');
@@ -52,9 +55,10 @@ exports.createFactory = (Model) =>
 
 exports.getOneFactoryById = (Model, populateOptions) =>
   catchAsync(async (request, response, next) => {
-    let query = Model.findById(request.params.doctorId);
+    console.log(request.params);
+    let query = Model.findById(request.params.Id);
     if (populateOptions) query = query.populate(populateOptions);
-
+    
     const doc = await query;
     if (!doc) {
       console.log('working ');
@@ -73,10 +77,10 @@ exports.getAllFactory = (Model) =>
     var filterObject = {};
     if (request.params.Id) {
       filterObject = {
-       id : request.params.Id,
+        _id: request.params.Id,
       };
     }
-
+    console.log('inside get all factory');
     const features = new APIFeatures(Model.find(filterObject), request.query)
       .filter()
       .sort()
