@@ -2,8 +2,11 @@ const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors')
+const morgan = require('morgan') //for production log purpose
 const cookie_parser = require('cookie-parser');
 const compression = require('compression')
+const helmet = require('helmet');
+
 
 const { doctorRouter } = require('./Routes/doctorRoutes.js');
 const { patientRouter } = require('./Routes/patientRoutes.js');
@@ -15,6 +18,11 @@ const { AppError } = require('./utils/Error.js');
 
 const app = express();
 app.enable('trust proxy')
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+); //SECURITY GLOBAL MIDDLEWARE THAT SET SECUTIRTY HTTP
 
 app.use(cookie_parser());
 app.use(cors())
@@ -49,6 +57,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+
+if (process.env.NODE_ENV == 'development') {
+  app.use(morgan('dev'));
+}
 
 //BODY PARSER
 app.use(
