@@ -71,9 +71,9 @@ exports.getOneFactoryById = (Model, populateOptions) =>
 exports.getAllFactory = (Model) =>
   catchAsync(async (request, response, next) => {
     var filterObject = {};
-    if (request.params.tourId) {
+    if (request.params.Id) {
       filterObject = {
-        tour: request.params.tourId,
+       id : request.params.Id,
       };
     }
 

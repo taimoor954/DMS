@@ -21,7 +21,7 @@ router.route('/get-my-pateints').get( protectDoctorRoutes,getMyPatients) //api w
 router.route('/login-doctor').post(login);//use by just patient
 
 router
-  .route('/:doctorId')
+  .route('/:Id')
   .get(getDoctorById) // api will be use by both client and doctor side
   .patch(updateDoctor)// api will be use by doctor side
   .delete(deleteDoctor); //// api will be use by admin side and doctor side

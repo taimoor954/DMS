@@ -8,6 +8,7 @@ const compression = require('compression')
 const { doctorRouter } = require('./Routes/doctorRoutes.js');
 const { patientRouter } = require('./Routes/patientRoutes.js');
 const { appointmentRouter } = require('./Routes/appointmentRoutes');
+const { adminRouter } = require('./Routes/adminRoutes');
 
 const globalErrorHandeler = require('./Controller/errorController.js');
 const { AppError } = require('./utils/Error.js');
@@ -68,6 +69,7 @@ app.use(
 app.use('/api/v1/doctor', doctorRouter);
 app.use('/api/v1/patient', patientRouter);
 app.use('/api/v1/appointment', appointmentRouter);
+app.use('/api/v1/admin', adminRouter);
 
 //ERROR HANDLER FOR ROUTE NOT FOUND
 app.all('*', (request, response, next) => {
