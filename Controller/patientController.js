@@ -1,5 +1,5 @@
 const { Appointment } = require('../Model/appointmentModel');
-const { Patient } = require('../Model/PatientModel');
+const { Patient } = require('../Model/patientModel');
 const catchAsync = require('../utils/catchAsync');
 const {
   getAllFactory,

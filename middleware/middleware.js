@@ -5,7 +5,7 @@ const validator = require('validator');
 
 const { AppError } = require('../utils/Error');
 const path = require('path');
-const { Patient } = require('../Model/PatientModel');
+const { Patient } = require('../Model/patientModel');
 const configDIR = path.join(__dirname, '../config.env');
 dotenv.config({ path: configDIR });
 

@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const catchAsync = require('../utils/catchAsync');
 const path = require('path');
 const { login, protectRouteMiddleware } = require('../middleware/middleware');
-const { Patient } = require('../Model/PatientModel');
+const { Patient } = require('../Model/patientModel');
 const { Doctor } = require('../Model/doctorModel');
 const configDIR = path.join(__dirname, '../config.env');
 
