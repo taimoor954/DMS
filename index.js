@@ -7,7 +7,11 @@ const cookie_parser = require('cookie-parser');
 const compression = require('compression')
 const helmet = require('helmet');
 const app = express();
-app.use(cors())
+var corsOptions = {
+  origin: 'http://localhost:8000',
+  credentials: true,
+};
+app.use(cors(corsOptions))
 
 
 const { doctorRouter } = require('./Routes/doctorRoutes.js');
