@@ -8,7 +8,7 @@ const compression = require('compression')
 const helmet = require('helmet');
 const app = express();
 var corsOptions = {
-  origin: 'http://localhost:8000',
+  origin: '*',
   credentials: true,
 };
 app.use(cors(corsOptions))
