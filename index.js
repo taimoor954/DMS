@@ -6,6 +6,8 @@ const morgan = require('morgan') //for production log purpose
 const cookie_parser = require('cookie-parser');
 const compression = require('compression')
 const helmet = require('helmet');
+const app = express();
+app.use(cors())
 
 
 const { doctorRouter } = require('./Routes/doctorRoutes.js');
@@ -16,7 +18,6 @@ const { adminRouter } = require('./Routes/adminRoutes');
 const globalErrorHandeler = require('./Controller/errorController.js');
 const { AppError } = require('./utils/Error.js');
 
-const app = express();
 app.enable('trust proxy')
 app.use(
   helmet({
@@ -25,7 +26,6 @@ app.use(
 ); //SECURITY GLOBAL MIDDLEWARE THAT SET SECUTIRTY HTTP
 
 app.use(cookie_parser());
-app.use(cors())
 
 
 app.use(compression()) //compress all the text sent to client
@@ -38,7 +38,7 @@ app.use(function (request, response, next) {
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4545');
+  res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
   res.setHeader(
     'Access-Control-Allow-Methods',
