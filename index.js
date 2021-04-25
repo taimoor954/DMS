@@ -8,7 +8,7 @@ const compression = require('compression')
 const helmet = require('helmet');
 const app = express();
 var corsOptions = {
-  origin: 'http://localhost:5500',
+  origin: 'http://127.0.0.1:5500',
   credentials: true,
 };
 app.use(cors(corsOptions))
@@ -42,7 +42,7 @@ app.use(function (request, response, next) {
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5500');
+  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
   // Request methods you wish to allow
   res.setHeader(
     'Access-Control-Allow-Methods',
