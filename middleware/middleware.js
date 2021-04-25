@@ -17,7 +17,7 @@ const createSendToken = (user, statusCode, request, response) => {
     expires: new Date(
       Date.now() + process.env.COOKIE_EXPIRY_IN * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true,
+    httpOnly: false,
     Path: '/',
     secure: request.secure || request.headers['x-forwarded-proto'] == 'https',
   };
