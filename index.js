@@ -12,6 +12,7 @@ var corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions))
+app.use(cookie_parser());
 
 
 const { doctorRouter } = require('./Routes/doctorRoutes.js');
@@ -29,7 +30,6 @@ app.use(
   })
 ); //SECURITY GLOBAL MIDDLEWARE THAT SET SECUTIRTY HTTP
 
-app.use(cookie_parser());
 
 
 app.use(compression()) //compress all the text sent to client
