@@ -58,7 +58,7 @@ exports.getOneFactoryById = (Model, populateOptions) =>
     console.log(request.params);
     let query = Model.findById(request.params.Id);
     if (populateOptions) query = query.populate(populateOptions);
-    
+
     const doc = await query;
     if (!doc) {
       console.log('working ');
@@ -96,6 +96,3 @@ exports.getAllFactory = (Model) =>
       },
     });
   });
-
-
-

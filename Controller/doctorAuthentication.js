@@ -6,7 +6,7 @@ const { Doctor } = require('../Model/doctorModel');
 const jwt = require('jsonwebtoken');
 const catchAsync = require('../utils/catchAsync');
 const path = require('path');
-const {  login, protectRouteMiddleware } = require('../middleware/middleware');
+const { login, protectRouteMiddleware } = require('../middleware/middleware');
 const configDIR = path.join(__dirname, '../config.env');
 
 dotenv.config({ path: configDIR });
@@ -20,10 +20,10 @@ exports.protectDoctorRoutes = catchAsync(async (request, response, next) => {
     request.headers.authorization.startsWith('Bearer')
   ) {
     token = request.headers.authorization.split(' ')[1];
-  }else if (request.cookies.jwt) {
+  } else if (request.cookies.jwt) {
     token = request.cookies.jwt;
   }
-  
+
   if (!token) {
     return next(new AppError('You are not logged in .Please log in', 401));
   }
@@ -36,6 +36,6 @@ exports.protectDoctorRoutes = catchAsync(async (request, response, next) => {
     );
 
   request.user = freshUser;
-    console.log(request.user);
+  console.log(request.user);
   next();
 });

@@ -5,7 +5,7 @@ const { AppError } = require('../utils/Error');
 const jwt = require('jsonwebtoken');
 const catchAsync = require('../utils/catchAsync');
 const path = require('path');
-const {  login, protectRouteMiddleware } = require('../middleware/middleware');
+const { login, protectRouteMiddleware } = require('../middleware/middleware');
 const { Admin } = require('../Model/adminModel');
 const configDIR = path.join(__dirname, '../config.env');
 
@@ -20,10 +20,10 @@ exports.protectAdminRoutes = catchAsync(async (request, response, next) => {
     request.headers.authorization.startsWith('Bearer')
   ) {
     token = request.headers.authorization.split(' ')[1];
-  }else if (request.cookies.jwt) {
+  } else if (request.cookies.jwt) {
     token = request.cookies.jwt;
   }
-  
+
   if (!token) {
     return next(new AppError('You are not logged in .Please log in', 401));
   }

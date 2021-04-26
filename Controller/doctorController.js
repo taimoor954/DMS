@@ -26,10 +26,9 @@ exports.updateDoctor = updateFactory(Doctor);
 
 exports.deleteDoctor = deleteFactory(Doctor);
 
-
-exports.getMyPatients = catchAsync(async(request, response, next) => {
-const appointments = await Appointment.find({doctor : request.user.id})
-response.status(200).json({
-  patients : appointments
-})
-})
+exports.getMyPatients = catchAsync(async (request, response, next) => {
+  const appointments = await Appointment.find({ doctor: request.user.id });
+  response.status(200).json({
+    patients: appointments,
+  });
+});

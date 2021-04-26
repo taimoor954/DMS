@@ -2,7 +2,6 @@ const dotenv = require('dotenv').config();
 const { AppError } = require('../utils/Error.js');
 const mongoose = require('mongoose');
 
-
 var routeNotFound = (err) => {
   var message = err.message;
   return new AppError(message, 404);

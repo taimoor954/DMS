@@ -1,19 +1,18 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-const cors = require('cors')
-const morgan = require('morgan') //for production log purpose
+const cors = require('cors');
+const morgan = require('morgan'); //for production log purpose
 const cookie_parser = require('cookie-parser');
-const compression = require('compression')
+const compression = require('compression');
 const helmet = require('helmet');
 const app = express();
 var corsOptions = {
   origin: 'http://127.0.0.1:5500',
   credentials: true,
 };
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 app.use(cookie_parser());
-
 
 const { doctorRouter } = require('./Routes/doctorRoutes.js');
 const { patientRouter } = require('./Routes/patientRoutes.js');
@@ -23,16 +22,14 @@ const { adminRouter } = require('./Routes/adminRoutes');
 const globalErrorHandeler = require('./Controller/errorController.js');
 const { AppError } = require('./utils/Error.js');
 
-app.enable('trust proxy')
+app.enable('trust proxy');
 app.use(
   helmet({
     contentSecurityPolicy: false,
   })
 ); //SECURITY GLOBAL MIDDLEWARE THAT SET SECUTIRTY HTTP
 
-
-
-app.use(compression()) //compress all the text sent to client
+app.use(compression()); //compress all the text sent to client
 //Set every application request and response header's content type to json format
 app.use(function (request, response, next) {
   request.headers['Content-Type'] = 'application/json';
@@ -61,7 +58,6 @@ app.use(function (request, response, next) {
 //   next();
 // });
 
-
 if (process.env.NODE_ENV == 'development') {
   app.use(morgan('dev'));
 }
@@ -81,7 +77,7 @@ app.use(
   })
 );
 
-var date = new Date()
+var date = new Date();
 
 //ROUTES HANDLER MIDDLEWARE
 app.use('/api/v1/doctor', doctorRouter);
@@ -99,6 +95,4 @@ app.use(globalErrorHandeler);
 
 exports.app = app;
 
-
 // dms.com/api/v1/doctor //Get all Doctors
-

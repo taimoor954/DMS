@@ -17,14 +17,15 @@ const createSendToken = (user, statusCode, request, response) => {
     expires: new Date(
       Date.now() + process.env.COOKIE_EXPIRY_IN * 24 * 60 * 60 * 1000
     ),
-    sameSite:"None",
+    sameSite: 'None',
     httpOnly: true,
     path: '/',
     secure: request.secure || request.headers['x-forwarded-proto'] == 'https',
   };
 
   // if (process.env.NODE_ENV == 'production') cookieOptions.secure = true; //FOR DEV
-  if (request.secure || request.headers['x-forwarded-proto'] == 'https') cookieOptions.secure = true; //for prod HEROKU SPECFIC
+  if (request.secure || request.headers['x-forwarded-proto'] == 'https')
+    cookieOptions.secure = true; //for prod HEROKU SPECFIC
   response.cookie('jwt', token, cookieOptions);
   user.password = undefined;
   response.status(statusCode).json({
@@ -46,7 +47,7 @@ const tokenGenerator = (id) => {
       expiresIn: process.env.TOKEN_EXPIRY,
     },
     {
-      algorithm: 'HS384' //changes
+      algorithm: 'HS384', //changes
     }
   );
 };
@@ -88,8 +89,7 @@ exports.restrictUser = (...roles) => {
   };
 };
 
-
-//FOR LOG OUT 
+//FOR LOG OUT
 exports.logout = (request, response) => {
   response.cookie('jwt', 'loggedOut', {
     expires: new Date(Date.now() + 10 * 1000), //tampered token will be given for 10 seconds and then the user will be logged out
