@@ -9,7 +9,7 @@ const helmet = require('helmet');
 const app = express();
 var corsOptions = {
   origin: 'http://127.0.0.1:5500',
-  credentials: true,
+  credentials: "same-origin",
 };
 app.use(cors(corsOptions))
 app.use(cookie_parser());
