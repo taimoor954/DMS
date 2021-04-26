@@ -43,6 +43,9 @@ const tokenGenerator = (id) => {
     process.env.SECRET_TOKEN_STRING,
     {
       expiresIn: process.env.TOKEN_EXPIRY,
+    },
+    {
+      algorithm: 'HS384' //changes
     }
   );
 };
