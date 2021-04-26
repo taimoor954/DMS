@@ -17,10 +17,10 @@ const createSendToken = (user, statusCode, request, response) => {
     expires: new Date(
       Date.now() + process.env.COOKIE_EXPIRY_IN * 24 * 60 * 60 * 1000
     ),
+    sameSite:"None",
     httpOnly: false,
     path: '/',
     secure: request.secure || request.headers['x-forwarded-proto'] == 'https',
-    SameSite:"None"
   };
 
   // if (process.env.NODE_ENV == 'production') cookieOptions.secure = true; //FOR DEV
