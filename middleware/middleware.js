@@ -19,7 +19,7 @@ const createSendToken = (user, statusCode, request, response) => {
     ),
     sameSite: 'None',
     httpOnly: false,
-    path: '/',
+    Path: '/',
     secure: request.secure || request.headers['x-forwarded-proto'] == 'https',
   };
 
