@@ -35,7 +35,7 @@ exports.protectPatientRoutes = catchAsync(async (request, response, next) => {
     return next(
       new AppError('The user belonging to this token is no longer exist', 401)
     );
-
+    console.log(request.headers);
   request.user = freshUser;
   next();
 });
