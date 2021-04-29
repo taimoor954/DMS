@@ -28,7 +28,7 @@ router
   .patch(protectPatientRoutes,updatePatient) //api will be use by patient side just
   .delete(protectPatientRoutes,deletePatient); //api will be use by admin 
 
-router.route('/logout').get(logout)
+router.route('/logout').get(protectPatientRoutes,logout)
 
 
 exports.patientRouter = router;

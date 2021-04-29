@@ -1,0 +1,17 @@
+//FAIQUE
+
+router.route('/').post(createPatient); //api will be use by patient side just
+
+
+router.route('/login-patient').post(login); //api will be use by patient side just
+
+
+router.route('/getAllDoctors').get(protectPatientRoutes,restrictUser('patient'),getAllDoctors)// api will be use by both client and doctor side
+
+router.route('/:Id').patch(protectPatientRoutes,updatePatient) //api will be use by patient side just
+
+
+router.route('/:Id').delete(protectPatientRoutes,deletePatient); //api will be use by admin 
+
+
+router.route('/logout').get(logout)
