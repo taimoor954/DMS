@@ -1,4 +1,5 @@
 const express = require('express');
+const { getAllDoctors } = require('../Controller/doctorController');
 const { login,  protectPatientRoutes  } = require('../Controller/patientAuthentication');
 const router = express.Router()
 const {
@@ -15,6 +16,9 @@ router.route('/').get(protectPatientRoutes,getAllPatients) //api will be use by 
 .post(createPatient); //api will be use by patient side just
 
 router.route('/login-patient').post(login); //api will be use by patient side just
+
+router.route('/').get(protectPatientRoutes,getAllDoctors)// api will be use by both client and doctor side
+
 router.route('/getmydoctors')
 .get(protectPatientRoutes,getMyDoctors) //api will be used by logged in patient
 
