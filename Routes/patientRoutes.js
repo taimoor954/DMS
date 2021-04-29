@@ -16,6 +16,7 @@ router.route('/').get(protectPatientRoutes,getAllPatients) //api will be use by 
 .post(createPatient); //api will be use by patient side just
 
 router.route('/login-patient').post(login); //api will be use by patient side just
+router.route('/logout-patient').get(logout)
 
 router.route('/getAllDoctors').get(protectPatientRoutes,restrictUser('patient'),getAllDoctors)// api will be use by both client and doctor side
 
@@ -28,7 +29,6 @@ router
   .patch(protectPatientRoutes,updatePatient) //api will be use by patient side just
   .delete(protectPatientRoutes,deletePatient); //api will be use by admin 
 
-router.route('/logout').get(protectPatientRoutes,logout)
 
 
 exports.patientRouter = router;
