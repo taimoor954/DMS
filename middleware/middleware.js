@@ -73,7 +73,6 @@ exports.login = (Model) =>
         new AppError('Something wrong with either email or password', 400)
       );
     }
-    // console.log(request.headers);
     //if correct then send jwt in response
     createSendToken(doctor, 200, request, response);
   });
