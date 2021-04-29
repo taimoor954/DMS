@@ -17,7 +17,7 @@ router.route('/').get(protectPatientRoutes,getAllPatients) //api will be use by 
 
 router.route('/login-patient').post(login); //api will be use by patient side just
 
-router.route('/').get(protectPatientRoutes,getAllDoctors)// api will be use by both client and doctor side
+router.route('/getAllDoctors').get(protectPatientRoutes,getAllDoctors)// api will be use by both client and doctor side
 
 router.route('/getmydoctors')
 .get(protectPatientRoutes,getMyDoctors) //api will be used by logged in patient
