@@ -1,17 +1,30 @@
 //FAIQUE
 
 router.route('/').post(createPatient); //api will be use by patient side just
+https://datamansys.herokuapp.com/api/v1/patient/ signup patient
 
 
 router.route('/login-patient').post(login); //api will be use by patient side just
-
+https://datamansys.herokuapp.com/api/v1/patient/login-patient //login patient
 
 router.route('/getAllDoctors').get(protectPatientRoutes,restrictUser('patient'),getAllDoctors)// api will be use by both client and doctor side
+https://datamansys.herokuapp.com/api/v1/patient/getAllDoctors //get all Doctor 
+
+
+
+router.route('/:Id').get(getDoctorById) // api will be use by both client and doctor side
+https://datamansys.herokuapp.com/api/v1/patient/getDoctorById/465465465465 //getDoctor by id 
+
 
 router.route('/:Id').patch(protectPatientRoutes,updatePatient) //api will be use by patient side just
+https://datamansys.herokuapp.com/api/v1/patient/4564654654654645465 //update 
+
 
 
 router.route('/:Id').delete(protectPatientRoutes,deletePatient); //api will be use by admin 
+https://datamansys.herokuapp.com/api/v1/patient/4564654654654645465 //delete
 
 
-router.route('/logout').get(logout)
+router.route('/logout-patient').get(logout)
+https://datamansys.herokuapp.com/api/v1/patient/logout-patient log patient
+

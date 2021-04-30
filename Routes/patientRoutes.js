@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllDoctors } = require('../Controller/doctorController');
+const { getAllDoctors, getDoctorById } = require('../Controller/doctorController');
 const { login,  protectPatientRoutes  } = require('../Controller/patientAuthentication');
 const router = express.Router()
 const {
@@ -19,6 +19,7 @@ router.route('/login-patient').post(login); //api will be use by patient side ju
 router.route('/logout-patient').get(logout)
 
 router.route('/getAllDoctors').get(protectPatientRoutes,restrictUser('patient'),getAllDoctors)// api will be use by both client and doctor side
+router.route('/getDoctorById/:Id').get(protectPatientRoutes,restrictUser('patient'),getDoctorById)// api will be use by both client and doctor side
 
 router.route('/getmydoctors')
 .get(protectPatientRoutes,restrictUser('patient'),getMyDoctors) //api will be used by logged in patient
