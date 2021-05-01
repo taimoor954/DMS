@@ -13,6 +13,7 @@ const router = express.Router();
 
 
 router.route('/login-doctor').post(login);//use by just patient
+router.route('/logout-doctor').get(logout)
 router.route('/').post(createDoctor); //Api will be use doctor side 
 
 
@@ -28,7 +29,6 @@ router
   .patch(updateDoctor)// api will be use by doctor side
   .delete(deleteDoctor); //// api will be use by admin side and doctor side
 
-router.route('/logout').get(logout)
 
 
 exports.doctorRouter = router;
