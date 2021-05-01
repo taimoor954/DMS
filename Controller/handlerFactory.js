@@ -21,7 +21,7 @@ exports.deleteFactory = (Model) =>
 exports.updateFactory = (Model) =>
   catchAsync(async (request, response, next) => {
     const doc = await Model.findByIdAndUpdate(
-      request.params.doctorId,
+      request.params.Id,
       request.body,
       {
         new: true,
