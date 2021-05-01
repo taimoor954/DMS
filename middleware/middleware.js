@@ -92,7 +92,7 @@ exports.restrictUser = (...roles) => {
 exports.logout = (request, response) => {
   response.cookie('jwt', 'loggedOut', {
     expires: new Date(Date.now() + 10 * 1000), //tampered token will be given for 10 seconds and then the user will be logged out
-    httpOnly: true,
+    httpOnly: false,
   });
   response.status(200).json({
     status: 'succesfully loggedout',
