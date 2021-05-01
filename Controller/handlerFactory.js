@@ -7,7 +7,7 @@ const { AppError } = require('../utils/Error');
 
 exports.deleteFactory = (Model) =>
   catchAsync(async (request, response, next) => {
-    const doc = await Model.findByIdAndDelete(request.params.doctorId);
+    const doc = await Model.findByIdAndDelete(request.params.Id);
     if (!doc) {
       //ERROR CLASSS AIEGA YAHA
       return next(new AppError('No doc with this ID found', 404));
