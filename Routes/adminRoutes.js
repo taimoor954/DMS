@@ -10,6 +10,7 @@ const {
   deleteAdmin,
   updateAdmin,
 } = require('../Controller/adminController');
+const { getAllAppointments, getAppointmentById, updateAppointment, deleteAppointment } = require('../Controller/appointmentController');
 const {
   getAllDoctors,
   getDoctorById,
@@ -42,6 +43,7 @@ router
 
 router.route('/getAllDoctors').get(getAllDoctors);
 router.route('/getAllPatients').get(getAllPatients);
+router.route('/getAllAppointments').get(getAllAppointments)
 
 router
   .route('/get-patient-by-id/:Id')
@@ -54,5 +56,12 @@ router
   .get(getDoctorById) // api will be use by both client and doctor side
   .patch(updateDoctor) // api will be use by doctor side
   .delete(deleteDoctor); //// api will be use by admin side and doctor side
+
+  router
+  .route('/get-appointment-by-id/:Id')
+  .get(getAppointmentById) // api will be use by both client and doctor side
+  .patch(updateAppointment) // api will be use by doctor side
+  .delete(deleteAppointment); //// api will be use by admin side and doctor side
+
 
 exports.adminRouter = router;
