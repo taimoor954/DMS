@@ -10,7 +10,12 @@ const {
   deleteAdmin,
   updateAdmin,
 } = require('../Controller/adminController');
-const { getAllAppointments, getAppointmentById, updateAppointment, deleteAppointment } = require('../Controller/appointmentController');
+const {
+  getAllAppointments,
+  getAppointmentById,
+  updateAppointment,
+  deleteAppointment,
+} = require('../Controller/appointmentController');
 const {
   getAllDoctors,
   getDoctorById,
@@ -29,11 +34,9 @@ const router = express.Router();
 router.route('/').get(getAllAdmins).post(createAdmin);
 router.route('/login-admin').post(login);
 
+router.use(protectAdminRoutes); //All below will be protected now. Admin must be logged in before using below functionlities
 
-
-router.use(protectAdminRoutes);//All below will be protected now. Admin must be logged in before using below functionlities
-
-router.route('/logout').get(logout)
+router.route('/logout').get(logout);
 
 router
   .route('/get-admin-by-id/:Id')
@@ -43,7 +46,7 @@ router
 
 router.route('/getAllDoctors').get(getAllDoctors);
 router.route('/getAllPatients').get(getAllPatients);
-router.route('/getAllAppointments').get(getAllAppointments)
+router.route('/getAllAppointments').get(getAllAppointments);
 
 router
   .route('/get-patient-by-id/:Id')
@@ -57,11 +60,10 @@ router
   .patch(updateDoctor) // api will be use by doctor side
   .delete(deleteDoctor); //// api will be use by admin side and doctor side
 
-  router
+router
   .route('/get-appointment-by-id/:Id')
   .get(getAppointmentById) // api will be use by both client and doctor side
   .patch(updateAppointment) // api will be use by doctor side
   .delete(deleteAppointment); //// api will be use by admin side and doctor side
-
 
 exports.adminRouter = router;
